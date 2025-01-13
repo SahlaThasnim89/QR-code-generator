@@ -1,9 +1,11 @@
  
  const QRCode=require('qrcode')
  const bcrypt = require('bcrypt');
-const { PrismaClient } = require('@prisma/client'); 
+const { PrismaClient } = require('@prisma/client');
+const pdfDocument=require('pdfkit') 
 
 const prisma = new PrismaClient();
+
 
 
  const registerPage=async(req,res)=>{
@@ -21,7 +23,7 @@ const prisma = new PrismaClient();
             console.log('all fields are required')
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await prisma.users.create({
+        const newUser = await prisma.user.create({
             data: {
               fname,
               lname,
@@ -29,6 +31,7 @@ const prisma = new PrismaClient();
               password: hashedPassword,
             },
           });
+          console.log(newUser,'newUser')
           req.session.userData=newUser
           
           res.redirect('/')
@@ -58,7 +61,7 @@ const prisma = new PrismaClient();
 const loginUser = async (req, res) => {
     try {
         const {email,password}=req.body
-        const checkUser = await prisma.users.findUnique({
+        const checkUser = await prisma.user.findUnique({
             where: { email },
         });
         if (checkUser) {
@@ -110,10 +113,90 @@ const generate=async(req,res)=>{
             },
             width:size
         })
+        console.log(qrCode)
+        const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
+        console.log(expiryDate)
+        const qrCodeDetails = await prisma.QRCode.create({
+            data: {
+                number: qrCode,
+                generatedDate: new Date(),
+                expiryDate: expiryDate
+            }
+        });
 
+        console.log(qrCodeDetails,'qrCodeDetails')
         res.render('generate',{qrCode,text,color,size})
     } catch (error) {
         res.render('generate',{error:'Error in generating qr code'})
+    }
+}
+
+// function buildPDF(dataCallback,endCallback){
+//     const doc=new pdfDocument();
+//     doc.on('data',dataCallback)
+//     doc.on('end',endCallback)
+//     doc.fontSize(25).text('some heading')
+//     doc.end()
+// }
+
+async function buildPDF(dataCallback,endCallback){
+    const doc=new pdfDocument({
+        size:'A4',
+        margin:50,
+    });
+    doc.on('data',dataCallback)
+    doc.on('end',endCallback)
+    const { title, generatedDate, expiryDate, qrCodeData } = settings;
+    doc
+        .fontSize(25)
+        .text(title, { align: 'center', underline: true })
+        .moveDown();
+    doc
+        .fontSize(14)
+        .text(`Generated Date: ${generatedDate}`, { align: 'left' })
+        .text(`Expiry Date: ${expiryDate}`, { align: 'left' })
+        .moveDown();
+
+    try {
+        const qrImage=await QRCode.toDataURL(qrCodeData,{errorCorrectionLevel:'H'})
+        const qrBuffer=Buffer.from(qrImage.split(',')[1],'base64')
+        doc.image(qrBuffer,{fit:[150,150],align: 'center', valign: 'center' })
+    } catch (error) {
+        console.error('Error generating QR code:', error);
+    }
+    doc.moveDown(2).fontSize(10).text('Thank you for using our service!', { align: 'center' });
+    doc.end()
+}
+
+const settings = {
+    title: 'My Custom PDF Title',
+    generatedDate: '2025-01-13',
+    expiryDate: '2025-02-13',
+    qrCodeData: 'https://example.com',
+};
+
+// buildPDF(
+//     (chunk) => process.stdout.write(chunk), // For testing: write to stdout
+//     () => console.log('PDF generated successfully'),
+//     settings
+// );
+
+
+const makePdf=async(req,res)=>{
+    try {
+        console.log('yggjh');
+        
+        const stream = res.writeHead(200, {
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': 'attachment; filename="qrdata.pdf"', 
+        });
+        console.log(stream,'ghfhgg');
+        
+        buildPDF((chunk)=>stream.write(chunk),
+    ()=>stream.end())
+    console.log('jddg')
+    } catch (error) {
+        console.log(error.message)
     }
 }
 
@@ -124,4 +207,5 @@ module.exports= {registerPage,
     loginUser,
     dashboard,
     generatePage,
-    generate}
+    generate,
+    makePdf}

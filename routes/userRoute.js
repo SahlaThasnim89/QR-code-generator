@@ -13,4 +13,6 @@ user.get('/',userController.dashboard)
 user.get('/generate',userController.generatePage)
 user.post('/generate',userController.generate)
 
+user.get('/generatePDF',userController.makePdf)
+
 module.exports=user

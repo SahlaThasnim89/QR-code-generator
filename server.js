@@ -7,6 +7,7 @@ require('dotenv').config();
 const isAuthenticated = require('./middleware/userMiddleware');
 
 
+
 app.set('view engine','ejs')
 
 app.use(express.json())
