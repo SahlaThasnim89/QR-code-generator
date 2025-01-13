@@ -2,6 +2,9 @@ const express=require('express')
 const app=express()
 const path = require("path");
 const flash = require('express-flash');
+const session=require("express-session")
+require('dotenv').config();
+const isAuthenticated = require('./middleware/userMiddleware');
 
 
 app.set('view engine','ejs')
@@ -10,7 +13,16 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(express.static(path.join(__dirname, "public")));
 
-
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET, 
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false, 
+    },
+  })
+);
 
 
 app.use((req,res,next)=>{
@@ -18,6 +30,10 @@ app.use((req,res,next)=>{
   res.locals.qrCode=null
   next()
 })
+
+// app.get('/',isAuthenticated, (req, res) => {
+//   res.render('home');
+// });
 
 userRoute=require('./routes/userRoute')
 app.use('/',userRoute)

@@ -1,7 +1,9 @@
  
  const QRCode=require('qrcode')
  const bcrypt = require('bcrypt');
- const client = require('../model/db'); 
+const { PrismaClient } = require('@prisma/client'); 
+
+const prisma = new PrismaClient();
 
 
  const registerPage=async(req,res)=>{
@@ -14,19 +16,22 @@
 
  const registerSubmit=async(req,res)=>{
     try {
-        console.log(req.body)
         const {fname,lname,email,password}=req.body
-        const hashedPassword = await bcrypt.hash(password, 10);
         if (!fname || !lname || !email || !password) {
             console.log('all fields are required')
         }
-        const query = `
-        INSERT INTO users (fname, lname, email, password)
-        VALUES ($1, $2, $3, $4) RETURNING *;
-    `;
-    const values = [fname, lname, email, hashedPassword];
-    const result = await client.query(query, values);
-    
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = await prisma.users.create({
+            data: {
+              fname,
+              lname,
+              email,
+              password: hashedPassword,
+            },
+          });
+          req.session.userData=newUser
+          
+          res.redirect('/')
     } catch (error) {
         console.log(error.message)
     }
@@ -38,15 +43,58 @@
         // const msg = req.flash('err')
         // res.render('user/login', { msg })
         // res.send('sfjsf')
-        res.render('login')
+        if (req.session.user) {
+            console.log('ghgfg')
+            return res.redirect('/'); 
+        }
+        res.render('login');
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const home=async(req,res)=>{
+
+
+const loginUser = async (req, res) => {
+    try {
+        const {email,password}=req.body
+        const checkUser = await prisma.users.findUnique({
+            where: { email },
+        });
+        if (checkUser) {
+            const passwordCheck = await bcrypt.compare(password, checkUser.password);
+            if (passwordCheck) {
+                req.session.userId = checkUser.id; 
+                res.redirect('/');
+
+                } else {
+                    // const errorMsg = "Password is invalid";
+                    // req.flash("err", errorMsg);
+                    res.redirect('/login');
+                }
+        } else {
+            const errorMsg = "Email is not found";
+            req.flash("err", errorMsg);
+            res.redirect('/login');
+        }
+    } catch (error) {
+        console.log("Error during login:", error.message);
+        res.status(500).send("Server Error");
+    }
+};
+
+const dashboard=async(req,res)=>{
+    try {
+        res.render('Dashboard')
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+const generatePage=async(req,res)=>{
     try {   
-        res.render('home')
+        res.render('generate')
     } catch (error) {
         console.log(error.message);
     }
@@ -63,9 +111,9 @@ const generate=async(req,res)=>{
             width:size
         })
 
-        res.render('home',{qrCode,text,color,size})
+        res.render('generate',{qrCode,text,color,size})
     } catch (error) {
-        res.render('home',{error:'Error in generating qr code'})
+        res.render('generate',{error:'Error in generating qr code'})
     }
 }
 
@@ -73,5 +121,7 @@ const generate=async(req,res)=>{
 module.exports= {registerPage,
     registerSubmit, 
     loginPage,
-    home,
+    loginUser,
+    dashboard,
+    generatePage,
     generate}

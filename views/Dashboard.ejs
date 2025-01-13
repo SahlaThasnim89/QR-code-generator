@@ -6,35 +6,62 @@
 
       <!--=============== REMIXICONS ===============-->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
       <!--=============== CSS ===============-->
       <link rel="stylesheet" href="assets/css/styles.css">
-      
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
       <title>Responsive login and registration form - Bedimcode</title>
    </head>
    <body>
       <!--=============== LOGIN IMAGE ===============-->
-         
+   
 
       <!--=============== LOGIN ===============-->
-      <div class="login container grid" id="loginAccessRegister">
+      <!-- <div class="login container grid w-full" slot="w-full" style="width: 1024px;" id="loginAccessRegister">
          <!--===== LOGIN ACCESS =====-->
-         <div class="login__access">
-            <h1 class="login__title">Log in to your account.</h1>
-            
-            <div class="login__area">
+         <div class="w-75 mx-auto my-5 d-flex flex-column align-items-center justify-content-center">
+            <h1 class="login__title">Generated QRCodes</h1>
+            <div class="d-flex p-3">
+            <button class="btn btn-dark text-white pr-2" onclick="window.location.href='/generate'">generate</button>
+         </div>
+            <table class="table table-dark">
+               <thead>
+                  <tr>
+                     <th scope="row">1</th>
+                      <th>ID</th>
+                      <th>Random Number</th>
+                      <th>Generated Date</th>
+                      <th>Expiry Date</th>
+                      <th>QR Code</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                 
+                  <tr>
+                     <th scope="row">1</th>
+                     <th>ID</th>
+                     <th>Random Number</th>
+                     <th>Generated Date</th>
+                     <th>Expiry Date</th>
+                     <th>QR Code</th>
+                     <th>Actions</th>
+                 </tr>
+                  
+                </tbody>
+              </table>
+            <!-- <div class="login__area">
                <form action="" class="login__form" method="post">
                   <div class="login__content grid">
                      <div class="login__box">
-                        <input type="email" id="email" name="email" required placeholder=" " class="login__input" style="height: 50px;">
+                        <input type="email" id="email" name="email" required placeholder=" " class="login__input">
                         <label for="email" class="login__label">Email</label>
             
                         <i class="ri-mail-fill login__icon"></i>
                      </div>
          
                      <div class="login__box">
-                        <input type="password" id="password" name="password" required placeholder=" " class="login__input" style="height: 50px;">
+                        <input type="password" id="password" name="password" required placeholder=" " class="login__input">
                         <label for="password" class="login__label">Password</label>
             
                         <i class="ri-eye-off-fill login__icon login__password" id="loginPassword"></i>
@@ -42,13 +69,8 @@
                   </div>
          
                   <a href="#" class="login__forgot">Forgot your password?</a>
-                  <div class="d-flex justify-content-center">
-                     <button type="submit" id="Download" 
-                        class="w-full btn btn-dark text-white pr-2 m-4 font-weight-800" 
-                        style="align-items: center;">
-                        Login
-                     </button>
-                  </div>
+         
+                  <button type="submit" class="login__button">Login</button>
                </form>
       
                <div class="login__social">
@@ -67,17 +89,11 @@
                   Don't have an account? 
                   <button id="loginButtonRegister" onclick="redirectToRegister()">Create Account</button>
                </p>
-            </div>
+            </div> -->
          </div>
 
     <script src="assets/js/main.js"></script>
-    
-<script>
-   function redirectToRegister() {
-       window.location.href = '/register'; // Redirects to the registration page
-   }
-   </script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
    </body>
 </html>

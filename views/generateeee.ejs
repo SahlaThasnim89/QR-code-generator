@@ -15,36 +15,20 @@
    </head>
    <body>
       <!--=============== LOGIN IMAGE ===============-->
-      <svg class="login__blob" viewBox="0 0 566 840" xmlns="http://www.w3.org/2000/svg">
-         <mask id="mask0" mask-type="alpha">
-            <path d="M342.407 73.6315C388.53 56.4007 394.378 17.3643 391.538 
-            0H566V840H0C14.5385 834.991 100.266 804.436 77.2046 707.263C49.6393 
-            591.11 115.306 518.927 176.468 488.873C363.385 397.026 156.98 302.824 
-            167.945 179.32C173.46 117.209 284.755 95.1699 342.407 73.6315Z"/>
-         </mask>
       
-         <g mask="url(#mask0)">
-            <path d="M342.407 73.6315C388.53 56.4007 394.378 17.3643 391.538 
-            0H566V840H0C14.5385 834.991 100.266 804.436 77.2046 707.263C49.6393 
-            591.11 115.306 518.927 176.468 488.873C363.385 397.026 156.98 302.824 
-            167.945 179.32C173.46 117.209 284.755 95.1699 342.407 73.6315Z"/>
-      
-            <!-- Insert your image (recommended size: 1000 x 1200) -->
-            <image class="login__img" href="assets/img/bg-img.jpg"/>
-         </g>
-      </svg>  
       
       <!-- <% if(locals.error){%>
         <div class="alert alert-danger" role="alert"><%=locals.error%></div>
    <%} %> -->
 
-
-      <div class="login container grid" style="margin-top: -30px;" id="loginAccessRegister">
+<div style="align-items: center;justify-content: center;">
+      <div  id="loginAccessRegister" style="justify-content: center;">
         <!--===== LOGIN ACCESS =====-->
-        <div class="login__access">
+        <div class="login__access" >
+
            <h1 class="login__title" style="font-size:larger; font-weight: 700;">Generate Here...</h1>
            
-           <div class="login__area" style="margin-top: -30px;">
+           <div class="login__area">
               <form action="/generate" method="post" class="login__form">
                  <div class="login__content grid">
                     <div class="login__box" style="height: 50px;">
@@ -70,9 +54,11 @@
                     
 
                 </div>
-                  <div style="display: flex; flex-direction: row; justify-content: space-between;height: 50px;">
-             <button type="submit" id="generate" class="login__button" style="align-items: center; margin-right: 5px;">Generate QR Code</button>
-             <button type="submit" id="Download" class="login__button" style="align-items: center; margin-left: 5px;">Download</button>
+                  <div class="mx-2 my-4" style="display: flex; flex-direction: row; justify-content: space-between;height: 50px;">
+            <button type="submit" onclick="window.location.href='/'" id="back" class="w-full btn btn-dark text-white pr-2 m-2" style="align-items: center">Go back</button>
+     
+             <button type="submit" id="generate" class="w-full btn btn-dark text-white pr-2 m-2" style="align-items: center; margin-right: 5px;">Generate QR Code</button>
+             <button type="submit" id="Download" class=" w-full btn btn-dark text-white pr-2 m-2" style="align-items: center; margin-left: 5px;">Download</button>
             </div>  
             </form>
 
@@ -82,11 +68,11 @@
                  <img src="<%=locals.qrCode%>" class="img-fluid" alt="">
              </div>
          <%} %>
-            
+ 
         </div>
     </div>
 
-  
+   </div>
    
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
