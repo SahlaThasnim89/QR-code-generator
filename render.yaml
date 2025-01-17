@@ -1,9 +1,11 @@
 version: 1
 
-environments:
-  production:
+stacks:
+  web:
     docker:
-      - image: my-docker-image:1.0.0
-      - environment:
-          NODE_ENV: production
-          PORT: 7000
+      image: your-docker-image:latest
+      ports:
+        - 7000:7000
+      environment:
+        - NODE_ENV=production
+        - PORT=7000
