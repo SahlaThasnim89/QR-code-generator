@@ -1,0 +1,9 @@
+version: 1
+
+environments:
+  production:
+    docker:
+      - image: my-docker-image:1.0.0
+      - environment:
+          NODE_ENV: production
+          PORT: 7000
