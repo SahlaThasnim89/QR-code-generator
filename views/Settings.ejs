@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>Qr code generator</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="head">Settings</h1>
+    <form action="/settings" method="post">
+    <div class="login">
+        <label for="voucherWidth">expiry date</label>
+
+    <input class="login-Item" type="number" id="expiryTime" name="expiryTime" min="1" max="90" required placeholder="Maximum Expiry Time (in days)" value="<%= validity%>"/>
+    <label for="voucherSize">Voucher Dimensions</label>
+      <select id="voucherSize" class="login-Item" name="voucherSize" required>
+        <option value="54x84" <%= settings.voucherSize === '54x84' ? 'selected' : '' %>>54 × 84 mm</option>
+        <option value="85.6x53.98" <%=  settings.voucherSize === '85.6x53.98' ? 'selected' : '' %>>85.6 × 53.98 mm</option>
+        <option value="100x150" <%=  settings.voucherSize === '100x150' ? 'selected' : '' %>>100 × 150 mm</option>
+        <option value="90x120" <%=  settings.voucherSize === '90x120' ? 'selected' : '' %>>90 × 120 mm</option>
+        <option value="75x105" <%=  settings.voucherSize === '75x105' ? 'selected' : '' %>>75 × 105 mm</option>
+
+      </select>
+    
+      <label for="fontSize">Font Sizes</label>
+      <input id="fontSize" type="text" class="login-Item" name="fontSize" value="{{ settings.fontSize }}" readonly />
+    
+      <label for="qrCodeSize">QR Code Size</label>
+      <input id="qrCodeSize" type="text" class="login-Item" name="qrCodeSize" value="{{ settings.qrCodeSizeStr }}" readonly />
+    
+
+    
+    
+    <button class="login-btn" style="background-color: black; color: antiquewhite;" type="submit">Save Settings</button>
+</div>
+</form>
+<a class="text-secondary" style="margin-left:35%" href="/">Go to Dashboard</a>
+</div>
+<style>
+      body {
+        background: url('assets/img/bg-img.jpg') no-repeat center center fixed; 
+        background-size: cover;
+}
+    .container{
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        margin-top: 100px;
+    }
+    .head{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: black;
+        margin: 15px;
+
+    }
+    .container{
+        width: 500px;
+        height: 500px;
+    }
+    .login{
+        align-items: center;
+        justify-content: center;
+        display: grid;
+        height: 400px;
+    }
+    .login-Item{
+        border: none;
+        background-color: rgb(245, 245, 245);
+        height: 50px;
+        width: 400px;
+        padding: 9px;
+    }
+    .login-password{
+        border: none;
+        background-color:rgb(245, 245, 245);
+        height: 50px;
+        width: 190px;
+         padding: 9px;
+    }
+    .login-btn{
+        border: none;
+        background-color: black;
+        color: rgb(245, 245, 245);
+        height: 50px;
+        width: 400px;
+        margin: 10px 0px;
+    }
+    
+    .password{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+</style>
+<script>
+
+
+  const voucherSizeSelect = document.getElementById("voucherSize");
+const fontSizeInput = document.getElementById("fontSize");
+const qrCodeSizeInput = document.getElementById("qrCodeSize");
+
+const sizeDetails = {
+  "54x84": {
+    fontSize: "Title: 16, Sub: 12, Normal: 10",
+    qrCodeSize: "20 × 20 mm",
+  },
+  "85.6x53.98": {
+    fontSize: "Title: 18, Sub: 12, Normal: 10",
+    qrCodeSize: "25 × 25 mm",
+  },
+  "100x150": {
+    fontSize: "Title: 24, Sub: 14, Normal: 12",
+    qrCodeSize: "35 × 35 mm",
+  },
+  "90x120": {
+    fontSize: "Title: 20, Sub: 14, Normal: 11",
+    qrCodeSize: "30 × 30 mm",
+  },
+  "75x105": {
+    fontSize: "Title: 18, Sub: 12, Normal: 10",
+    qrCodeSize: "25 × 25 mm",
+  },
+};
+
+voucherSizeSelect.addEventListener("change", () => {
+  const selectedSize = voucherSizeSelect.value;
+  const details = sizeDetails[selectedSize] || {
+    fontSize: "Not defined",
+    qrCodeSize: "Not defined",
+  };
+
+  fontSizeInput.value = details.fontSize;
+  qrCodeSizeInput.value = details.qrCodeSize;
+});
+
+voucherSizeSelect.dispatchEvent(new Event("change"));
+
+</script>
+
+
+</body>
+</html>

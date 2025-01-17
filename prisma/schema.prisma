@@ -20,11 +20,37 @@ model User {
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
+    
+  // Relations
+  qrcodes   QRCode[]
+  settings  Settings?
 }
+
 
 model QRCode {
   id            Int      @id @default(autoincrement())
   number        String   @unique
+  text          String?  @default("") 
+  voucherName   String
   generatedDate DateTime @default(now())
   expiryDate    DateTime
+
+  // Foreign key
+  userId        Int
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+
+model Settings {
+  id             Int      @id @default(autoincrement())
+  generatedTime  DateTime @default(now())
+  expiryDate     DateTime
+  expiryTime     Int      @default(30) // Expiry time in days
+  voucherSize    String   @default("85.6x53.98") // Stored voucher size
+  fontSize       String   @default("Title: 18, Sub: 12, Normal: 10") // Font size options
+  qrCodeSizeStr  String   @default("25 × 25 mm")  // QR code dimensions
+
+  // Foreign key
+  userId         Int      @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

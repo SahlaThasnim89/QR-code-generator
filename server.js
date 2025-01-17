@@ -1,15 +1,15 @@
 const express=require('express')
 const app=express()
+const nocache=require("nocache")
 const path = require("path");
-const flash = require('express-flash');
 const session=require("express-session")
 require('dotenv').config();
-const isAuthenticated = require('./middleware/userMiddleware');
 
 
 
 app.set('view engine','ejs')
 
+app.use(nocache())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(express.static(path.join(__dirname, "public")));
@@ -32,12 +32,14 @@ app.use((req,res,next)=>{
   next()
 })
 
-// app.get('/',isAuthenticated, (req, res) => {
-//   res.render('home');
-// });
+
 
 userRoute=require('./routes/userRoute')
 app.use('/',userRoute)
+
+app.get('*',(req,res)=>{
+  res.redirect('/error')
+})
 
 
 const port=process.env.PORT||7000

@@ -17,6 +17,8 @@
     "express": "^4.21.2",
     "express-flash": "^0.0.2",
     "express-session": "^1.18.1",
+    "jspdf": "^2.5.2",
+    "nocache": "^4.0.0",
     "pdfkit": "^0.16.0",
     "pg": "^8.13.1",
     "qrcode": "^1.5.4"
