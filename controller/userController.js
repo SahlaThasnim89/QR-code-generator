@@ -126,6 +126,7 @@ const Logout = async (req, res) => {
   res.redirect("/login");
 };
 
+
 const dashboard = async (req, res) => {
   try {
     const limit = 5;
@@ -144,6 +145,7 @@ const dashboard = async (req, res) => {
   }
 };
 
+
 const generatePage = async (req, res) => {
   try {
     res.render("generate");
@@ -151,6 +153,8 @@ const generatePage = async (req, res) => {
     console.log(error.message);
   }
 };
+
+
 
 const generate = async (req, res) => {
   const { name } = req.body;

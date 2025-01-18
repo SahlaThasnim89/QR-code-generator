@@ -25,7 +25,7 @@
     <input class="login-Item" type="number" id="expiryTime" name="expiryTime" min="1" max="90" required placeholder="Maximum Expiry Time (in days)" value="<%= validity%>"/>
     <label for="voucherSize">Voucher Dimensions</label>
       <select id="voucherSize" class="login-Item" name="voucherSize" required>
-        <option value="54x84" <%= settings.voucherSize === '54x84' ? 'selected' : '' %>>54 × 84 mm</option>
+        <option value="54x54" <%= settings.voucherSize === '54x54' ? 'selected' : '' %>>54 × 54 mm</option>
         <option value="85.6x53.98" <%=  settings.voucherSize === '85.6x53.98' ? 'selected' : '' %>>85.6 × 53.98 mm</option>
         <option value="100x150" <%=  settings.voucherSize === '100x150' ? 'selected' : '' %>>100 × 150 mm</option>
         <option value="90x120" <%=  settings.voucherSize === '90x120' ? 'selected' : '' %>>90 × 120 mm</option>
@@ -113,25 +113,25 @@ const fontSizeInput = document.getElementById("fontSize");
 const qrCodeSizeInput = document.getElementById("qrCodeSize");
 
 const sizeDetails = {
-  "54x84": {
+  "54x54": {
     fontSize: "Title: 16, Sub: 12, Normal: 10",
-    qrCodeSize: "20 × 20 mm",
+    qrCodeSize: "40 × 40 mm",
   },
   "85.6x53.98": {
     fontSize: "Title: 18, Sub: 12, Normal: 10",
-    qrCodeSize: "25 × 25 mm",
+    qrCodeSize: "35 × 35 mm",
   },
   "100x150": {
     fontSize: "Title: 24, Sub: 14, Normal: 12",
-    qrCodeSize: "35 × 35 mm",
+    qrCodeSize: "100 × 100 mm",
   },
   "90x120": {
     fontSize: "Title: 20, Sub: 14, Normal: 11",
-    qrCodeSize: "30 × 30 mm",
+    qrCodeSize: "80 × 80 mm",
   },
   "75x105": {
     fontSize: "Title: 18, Sub: 12, Normal: 10",
-    qrCodeSize: "25 × 25 mm",
+    qrCodeSize: "120 × 120 mm",
   },
 };
 
