@@ -42,7 +42,7 @@ app.get('*',(req,res)=>{
 })
 
 
-const port=process.env.PORT||7000
+const port=process.env.PORT||5000
 app.listen(port, () => {
     console.log(
       `Server is successfully running. Click here for more info: \x1b[34mhttp://localhost:${port}`

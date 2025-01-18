@@ -293,7 +293,6 @@ const exportPDF = async (req, res) => {
 
     doc.moveDown(1);
 
-    console.log("voucher");
     const qrCodeData = await QRCode.toDataURL(voucher.qrData);
     const qrImageBuffer = Buffer.from(qrCodeData.split(",")[1], "base64");
 
