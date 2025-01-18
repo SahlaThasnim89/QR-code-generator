@@ -25,14 +25,14 @@ const registerSubmit = async (req, res) => {
 
     const { data } = req.body;
     const { fname, lname, email, password, cPassword } = data;
-    const user = await prisma.user.findUnique({
+    const user = await prisma.User.findUnique({
       where: {
         email: email,
       },
     });
     if (!user) {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = await prisma.user.create({
+      const newUser = await prisma.User.create({
         data: {
           fname,
           lname,
@@ -86,7 +86,7 @@ const loginPage = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const checkUser = await prisma.user.findUnique({
+    const checkUser = await prisma.User.findUnique({
       where: { email },
     });
     if (checkUser) {
